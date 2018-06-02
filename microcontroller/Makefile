@@ -1,3 +1,9 @@
+# This file is part of the Amperose project.
+# This project is developed and maintained by the Amperose Team.
+# The project is licensed under the MIT license terms (see LICENSE).
+# You are not required to include this header, or any type of acknowledgment
+# when using this project, but we would appreciate it very much if you did!
+
 ##############################################################################
 # Project & Device
 #
