@@ -131,7 +131,8 @@ $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf
 
 # Create the Build directory
 $(BUILD_DIR):
-	mkdir $@
+	mkdir -p $@
+	@ echo "Nothing to build, modify makefile"
 
 #
 # Build Process
