@@ -24,16 +24,47 @@ DEVICE    = STM32F767VI
 #
 
 # Linker script
-LDSCRIPT =
+LDSCRIPT = src/STM32F767VITx.ld
 
 # C sources that can be compiled in ARM or THUMB mode
-C_SOURCES = main.c
+C_SOURCES = \
+	drivers/STM32F7xx_HAL_Driver/Src/ \
+		stm32f7xx_hal_cortex.c \
+		stm32f7xx_hal_pwr_ex.c \
+		stm32f7xx_hal_flash_ex.c \
+		stm32f7xx_hal_rcc_ex.c \
+		stm32f7xx_hal_gpio.c \
+		stm32f7xx_hal_dma_ex.c \
+		stm32f7xx_hal_dma.c \
+		stm32f7xx_hal_flash.c \
+		stm32f7xx_hal.c \
+		stm32f7xx_hal_rcc.c \
+		stm32f7xx_hal_pwr.c \
+	drivers/Initialization/Src/ \
+		stm32f7xx_it.c \
+		stm32f7xx_hal_msp.c \
+		stm32f7xx_system_clock.c \
+		system_stm32f7xx.c \
+	src/ \
+		main.c
 
 # C Includes
-C_INCLUDES =
+C_INCLUDES = \
+	-Iconfig \
+	-Iinclude \
+	-Idrivers/Initialization/Inc \
+	-Idrivers/STM32F7xx_HAL_Driver/Inc \
+	-Idrivers/STM32F7xx_HAL_Driver/Inc/Legacy \
+	-Idrivers/CMSIS/Device/ST/STM32F7xx/Include \
+	-Idrivers/CMSIS/Include
+
+# C defines
+C_DEFS =  \
+	-DUSE_HAL_DRIVER \
+	-DSTM32F767xx
 
 # ASM sources
-AS_SOURCES =
+AS_SOURCES = src/startup_stm32f767xx.s
 
 # ASM Includes
 AS_INCLUDES =
@@ -60,17 +91,22 @@ GDB = $(PREFIX)gdb
 HEX = $(CP) -O ihex
 BIN = $(CP) -O binary
 
-# C Flags
-C_WARN   = -Wall -Wextra -Werror -Wundef -Wstrict-prototypes
-C_OPTS   = -O2 -ggdb -fomit-frame-pointer -falign-functions=16
+# Common Flags
+COMMON = -mcpu=$(MCU) -mthumb
 
-C_FLAGS  = $(C_OPTS) $(C_WARN)
+# C Flags
+C_WARN   = -Wall -Wextra -Wundef -Wstrict-prototypes
+C_OPTS   = -O2 -ggdb -fomit-frame-pointer -falign-functions=16
+C_STD 	 = -std=gnu11
+
+C_FLAGS  = $(COMMON) $(C_OPTS) $(C_WARN) $(C_STD) $(C_INCLUDES) $(C_DEFS)
 
 # ASM Flags
-AS_FLAGS =
+AS_FLAGS = $(COMMON) $(AS_INCLUDES)
 
 # LD Flags
-LD_FLAGS =
+LD_FLAGS = $(COMMON) -T$(LDSCRIPT) -lc -lm -lnosys
+
 #
 # Compilation Options
 ##############################################################################
@@ -78,6 +114,9 @@ LD_FLAGS =
 ##############################################################################
 # Build Process
 #
+
+# Default Target : ELF - HEX - BIN
+all: $(ELF) $(BUILD_DIR)/$(PROJECT).hex $(BUILD_DIR)/$(PROJECT).bin
 
 # List C Objects
 # 1) Replace all .c by .o ($(VAR:pattern:replacement))
@@ -101,26 +140,26 @@ vpath %.c $(sort $(dir $(C_SOURCES)))
 vpath %.s $(sort $(dir $(AS_SOURCES)))
 
 # Build C Objects
-$(BUILD_DIR)/%.o: %.c
+$(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
 	$(CC) -c $(C_FLAGS) $< -o $@
 
 # Build ASM Objects
-$(BUILD_DIR)/%.o: %.s
+$(BUILD_DIR)/%.o: %.s | $(BUILD_DIR)
 	$(AS) -c $(AS_FLAGS) $< -o $@
 
 # Build ELF file: Link all objects with corresponding Linking Flags,
 # If Objects are not yet build ==> Build them using C & ASM Rules.
 # List the size of each section as well as the total size.
-$(ELF): $(OBJECTS)
-	$(LD) $< $(LD_FLAGS) -o $@
+$(ELF): $(OBJECTS) | $(BUILD_DIR)
+	$(LD) $(OBJECTS) $(LD_FLAGS) -o $@
 	$(SZ) $@
 
 # Generate the HEX file
-$(BUILD_DIR)/%.hex: $(BUILD_DIR)/%.elf
+$(BUILD_DIR)/%.hex: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
 	$(HEX) $< $@
 
 # Generate the BINARY file
-$(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf
+$(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
 	$(BIN) $< $@
 
 # Create the Build directory
