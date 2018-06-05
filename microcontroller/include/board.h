@@ -1,6 +1,11 @@
 #ifndef BOARD_H
 #define BOARD_H
 
+/***************************** Exported Functions******************************/
+
+// Board Initialization: Set all pins to input floating (Except SWD)
+void Board_Init(void);
+
 /******************************* IO Assignments *******************************/
 
 /*********************************** GPIO A ***********************************/

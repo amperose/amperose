@@ -2,6 +2,7 @@
 
 // Application Entry Point
 
+#include "board.h"
 #include "stm32f7xx_hal.h"
 #include "stm32f7xx_system_clock.h"
 
@@ -12,6 +13,8 @@ int main(void) {
   // Configure system clocks
   System_Clock_Config();
 
+  // Initialize Board (Set all pins to floating input except SWD)
+  Board_Init();
 
   while (1) {
 

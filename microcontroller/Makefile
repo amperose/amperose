@@ -46,6 +46,8 @@ C_SOURCES = \
 		stm32f7xx_system_clock.c \
 		system_stm32f7xx.c \
 	src/ \
+		board.c \
+		error_handler.c \
 		main.c
 
 # C Includes
