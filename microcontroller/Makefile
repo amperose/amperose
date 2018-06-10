@@ -144,30 +144,36 @@ vpath %.s $(sort $(dir $(AS_SOURCES)))
 
 # Build C Objects
 $(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
-	$(CC) -c $(C_FLAGS) $< -o $@
+	@echo "Building $@"
+	@$(CC) -c $(C_FLAGS) $< -o $@
 
 # Build ASM Objects
 $(BUILD_DIR)/%.o: %.s | $(BUILD_DIR)
-	$(AS) -c $(AS_FLAGS) $< -o $@
+	@echo "Building $@"
+	@$(AS) -c $(AS_FLAGS) $< -o $@
 
 # Build ELF file: Link all objects with corresponding Linking Flags,
 # If Objects are not yet build ==> Build them using C & ASM Rules.
 # List the size of each section as well as the total size.
 $(ELF): $(OBJECTS) | $(BUILD_DIR)
-	$(LD) $(OBJECTS) $(LD_FLAGS) -o $@
+	@echo "Building the application $@"
+	@$(LD) $(OBJECTS) $(LD_FLAGS) -o $@
 	$(SZ) $@
 
 # Generate the HEX file
 $(BUILD_DIR)/%.hex: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
-	$(HEX) $< $@
+	@echo "Generating hexadecimal output file $@"
+	@$(HEX) $< $@
 
 # Generate the BINARY file
 $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
-	$(BIN) $< $@
+	@echo "Generating binary output file $@"
+	@$(BIN) $< $@
 
 # Create the Build directory
 $(BUILD_DIR):
-	mkdir $@
+	@echo "Creating $(BUILD_DIR) Directory"
+	@mkdir $@
 
 #
 # Build Process
@@ -211,7 +217,9 @@ debug: $(ELF) startgdbserver
 .PHONY: clean
 
 clean:
-	rm -rf $(BUILD_DIR)
+	@echo "Cleaning ..."
+	@echo "Remove $(BUILD_DIR) directory"
+	@rm -rf $(BUILD_DIR)
 
 #
 # Clean
