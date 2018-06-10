@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "amperose_conf.h"
 #include "SEGGER_RTT.h"
 
 // initialization function
