@@ -4,4 +4,4 @@
 MIC_DIR = ./microcontroller
 
 build:
-	make -C $(MIC_DIR) build
+	make -C $(MIC_DIR) all
