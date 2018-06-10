@@ -73,7 +73,7 @@
 /* #define HAL_MMC_MODULE_ENABLED   */
 /* #define HAL_SPDIFRX_MODULE_ENABLED   */
 #define HAL_SPI_MODULE_ENABLED
-/* #define HAL_TIM_MODULE_ENABLED   */
+#define HAL_TIM_MODULE_ENABLED
 /* #define HAL_UART_MODULE_ENABLED   */
 /* #define HAL_USART_MODULE_ENABLED   */
 /* #define HAL_IRDA_MODULE_ENABLED   */
@@ -223,6 +223,10 @@
 */
 
 #define USE_SPI_CRC                     0U
+
+/* ################## TIM peripheral configuration ########################## */
+
+#define USE_HAL_TIM_REGISTER_CALLBACKS 0
 
 /* Includes ------------------------------------------------------------------*/
 /**

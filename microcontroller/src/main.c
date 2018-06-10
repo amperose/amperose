@@ -5,6 +5,7 @@
 #include "board.h"
 #include "rtt.h"
 #include "debug.h"
+#include "rgb_led.h"
 #include "stm32f7xx_hal.h"
 #include "stm32f7xx_system_clock.h"
 
@@ -19,10 +20,11 @@ int main(void) {
   Board_Init();
 
   RTT_init();
-  int i = 0;
-
+  // Initialize RGB LED
+  RGB_Led_Init();
+  AMPEROSE_DEBUG("Hello World!");
+  
   while (1) {
-    i += 1;
-    AMPEROSE_DEBUG("Hello World %d", i);
+
   }
 }

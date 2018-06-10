@@ -29,17 +29,19 @@ LDSCRIPT = src/STM32F767VITx.ld
 # C sources that can be compiled in ARM or THUMB mode
 C_SOURCES = \
 	drivers/STM32F7xx_HAL_Driver/Src/ \
+		stm32f7xx_hal.c \
 		stm32f7xx_hal_cortex.c \
-		stm32f7xx_hal_pwr_ex.c \
-		stm32f7xx_hal_flash_ex.c \
-		stm32f7xx_hal_rcc_ex.c \
-		stm32f7xx_hal_gpio.c \
 		stm32f7xx_hal_dma_ex.c \
+		stm32f7xx_hal_flash_ex.c \
+		stm32f7xx_hal_pwr_ex.c \
+		stm32f7xx_hal_rcc_ex.c \
+		stm32f7xx_hal_tim_ex.c \
 		stm32f7xx_hal_dma.c \
 		stm32f7xx_hal_flash.c \
-		stm32f7xx_hal.c \
-		stm32f7xx_hal_rcc.c \
+		stm32f7xx_hal_gpio.c \
 		stm32f7xx_hal_pwr.c \
+		stm32f7xx_hal_rcc.c \
+		stm32f7xx_hal_tim.c \
 	drivers/Initialization/Src/ \
 		stm32f7xx_it.c \
 		stm32f7xx_hal_msp.c \
@@ -51,6 +53,7 @@ C_SOURCES = \
 		SEGGER_RTT.c \
 		SEGGER_RTT_printf.c \
 		rtt.c \
+		rgb_led.c \
 		main.c
 
 # C Includes
