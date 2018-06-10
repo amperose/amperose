@@ -63,7 +63,8 @@ C_INCLUDES = \
 # C defines
 C_DEFS =  \
 	-DUSE_HAL_DRIVER \
-	-DSTM32F767xx
+	-DSTM32F767xx \
+	-DUSE_FULL_ASSERT
 
 # ASM sources
 AS_SOURCES = src/startup_stm32f767xx.s
@@ -97,7 +98,7 @@ BIN = $(CP) -O binary
 COMMON = -mcpu=$(MCU) -mthumb
 
 # C Flags
-C_WARN   = -Wall -Wextra -Wundef -Wstrict-prototypes
+C_WARN   = -Wall -Werror -Wextra -Wundef -Wstrict-prototypes
 C_OPTS   = -O2 -ggdb -fomit-frame-pointer -falign-functions=16
 C_STD 	 = -std=gnu11
 
