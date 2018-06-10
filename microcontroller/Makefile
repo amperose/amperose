@@ -48,6 +48,9 @@ C_SOURCES = \
 	src/ \
 		board.c \
 		error_handler.c \
+		SEGGER_RTT.c \
+		SEGGER_RTT_printf.c \
+		rtt.c \
 		main.c
 
 # C Includes
