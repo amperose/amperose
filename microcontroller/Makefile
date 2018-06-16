@@ -51,6 +51,7 @@ C_SOURCES = \
 		SEGGER_RTT.c \
 		SEGGER_RTT_printf.c \
 		rtt.c \
+		switches.c \
 		main.c
 
 # C Includes
