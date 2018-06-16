@@ -40,6 +40,8 @@ C_SOURCES = \
 		stm32f7xx_hal.c \
 		stm32f7xx_hal_rcc.c \
 		stm32f7xx_hal_pwr.c \
+		stm32f7xx_hal_dac_ex.c \
+		stm32f7xx_hal_dac.c \
 	drivers/Initialization/Src/ \
 		stm32f7xx_it.c \
 		stm32f7xx_hal_msp.c \
@@ -47,6 +49,7 @@ C_SOURCES = \
 		system_stm32f7xx.c \
 	src/ \
 		board.c \
+		dac.c \
 		error_handler.c \
 		SEGGER_RTT.c \
 		SEGGER_RTT_printf.c \
